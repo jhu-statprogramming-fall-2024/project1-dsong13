@@ -1,0 +1,105 @@
+---
+title: "Project 1"
+---
+
+## Part 1
+
+1.  Read this blogpost titled [Building a brand as a scientist](https://www.stephaniehicks.com/blog/building-a-brand-as-a-scientist).
+
+2.  Reflect on the questions in the “Defining your brand” section.
+
+3.  Write two paragraphs (4-6 sentences) max here answering one (or more) of the questions asked in the section above.
+
+    \[PASTE SENTENCES\]
+
+## Part 2
+
+1.  Create a GitHub repo for your website
+2.  Build a website using Quarto
+3.  Include a README.md file
+4.  Deploy your website
+5.  Share your website
+
+## Part 3
+
+1.  Use [`wget`](https://www.gnu.org/software/wget) to download the `students.csv` file locally from [here](https://github.com/stephaniehicks/jhustatprogramming2024/blob/main/projects/01-project/students.csv).
+
+    ```{bash}
+
+    # Check if students.csv file exists to prevent downloading each time 
+
+    if [ ! -f "students.csv" ]; then 
+        wget https://raw.githubusercontent.com/stephaniehicks/jhustatprogramming2024/main/projects/01-project/students.csv
+
+    else
+        echo "students.csv already exists."
+    fi
+    ```
+
+2.  Display the contents of the `students.csv` file using the `cat` command.
+
+    ```{bash}
+    cat students.csv # print the contents of the students.csv
+    ```
+
+3.  Display only the first 5 lines of the file using `head` to show the first few lines.
+
+    ```{bash}
+    head -n 5 students.csv # display the first 5 lines 
+    ```
+
+4.  Display only the last 3 lines of the file using `tail` to show the last few lines.
+
+    ```{bash}
+    tail -n 3 students.csv # display the last 3 lines 
+    ```
+
+5.  Count the number of lines in the file using the `wc` command to count the lines.
+
+    ```{bash}
+    wc -l students.csv # count the number of lines 
+    ```
+
+6.  Find all students who are taking “Math” as a subject using `grep` to filter lines with the subject “Math”.
+
+    ```{bash}
+    grep "Math" students.csv # find students who are taking "Math"
+    ```
+
+7.  Find all female students using `grep` or `awk` to filter based on gender.
+
+    ```{bash}
+    awk -F, '$4 == "F" {print}' students.csv # find all female students
+    ```
+
+8.  Sort the file by the students’ ages in ascending order. Use `sort` to order by the “Age” column.
+
+    ```{bash}
+    sort -t, -k3,3n students.csv # sort by students' ages in ascending order
+      ## -t, delimiter 
+      ## -k3,3 sort using the third column
+      ## n sort in numerical order 
+    ```
+
+9.  Find the unique subjects listed in the file. Use `cut`, `sort`, and `uniq` to extract unique subjects.
+
+    ```{bash}
+    cut -d, -f6 students.csv | sort | uniq # find unique subjects 
+      ## -d, delimiter
+      ## -f6 look for subjects in the sixth column 
+    ```
+
+10. Calculate the average grade of the students. Use `awk` to sum the grades and divide by the number of students.
+
+    ```{bash}
+    awk -F, '{sum += $5} END {print sum / (NR -1)}' students.csv # calculate the average grade of the students 
+      ## NR-1 to exclude header when counting the number of rows
+    ```
+
+11. Replace all occurrences of “Math” with “Mathematics” in the file. Use `sed` to perform the replacement.
+
+    ```{bash}
+    sed 's/Math/Mathematics/g' students.csv # replace "Math" with "Mathematics"
+      ## s substitution 
+      ## g global flag (replace all occurrences in each line)
+    ```
